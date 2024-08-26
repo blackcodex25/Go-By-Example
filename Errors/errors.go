@@ -49,11 +49,11 @@ func main() {
 		}
 	}
 
-	// ตัวอย่างการใช้ฟังก์ชัน makeTea และตรวจสอบข้อผิดพลาด
+	// ตัวอย่างการใช้ฟังก์ชัน makeTea และตรวจสอบข้อผิดพลาด if errors.Is(err, ErrOutoftea)
 	for i := range 5 {
 		if err := makeTea(i); err != nil {
 			// ใช้ errors.Is เพื่อตรวจสอบว่าข้อผิดพลาดเป็นชนิดไหน
-			if errors.Is(err, ErrOutoftea) {
+			if err == ErrOutoftea {
 				f.Println("We Should buy new tea!")
 			} else if errors.Is(err, ErrPower) {
 				f.Println("Now it is dark")
