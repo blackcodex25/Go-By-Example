@@ -38,7 +38,7 @@ goroutine อื่นทำงานเสร็จสิ้นแล้ว
 func worker(done chan bool) {
 	f.Println("Working...")
 	// หน่วงเวลา 1 วินาที
-	time.Sleep(2 * time.Second)
+	time.Sleep(time.Second)
 	f.Println("done")
 
 	// ส่งค่าลงใน channel เพื่อบอกว่าทำงานเสร็จแล้ว
@@ -48,10 +48,9 @@ func worker(done chan bool) {
 func main() {
 	// สร้าง buffered channel ที่มีขนาด bufer เท่ากับ 1
 	done := make(chan bool, 1)
+
 	// เรียกใช้ฟังก์ชัน worker ใน goroutine ใหม่
-	go func() {
-		worker(done)
-	}()
+	go worker(done)
 
 	// บล็อการทำงานของ main goroutines
 	// จนกว่าจะได้รับค่าใน channels done
