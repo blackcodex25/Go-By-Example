@@ -11,7 +11,7 @@ import (
 โยง goroutines ที่ทำงานพร้อมกัน
 คำอธิบายบทความ:
 Channels คืออะไร?
-Channels คือ "ท่อ" ที่เชื่อม goroutines ที่ทำงานพร้อมกัน
+*Channels คือ "ท่อ" ที่เชื่อม goroutines ที่ทำงานพร้อมกัน
 (concurrent) เราสามารถส่งค่าไปยัง channel จาก
 goroutine หนึ่งและรับค่าจาก channel นั้นในอีก goroutine
 หนึ่งได้
