@@ -63,7 +63,7 @@ func main() {
 	}()
 
 	// ส่งงานไปยัง channels 'jobs' ทั้งหมด 3 งาน (เลข 1 ถึง 3)
-	for j := 1; j <= 2; j++ {
+	for j := 1; j <= 3; j++ {
 		jobs <- j
 		fmt.Println("sent job", j)
 	}
