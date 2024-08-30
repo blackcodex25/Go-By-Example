@@ -1,0 +1,75 @@
+Worker Pools คืออะไร
+Worker Pools เป็นหนึ่งในแนวทางที่ใช้ในการเพิ่มประสิทธิภาพ
+การทำงานของโปรแกรม โดยเฉพาะในกรณีที่มีงานหรือ task
+จำนวนมากที่ต้องประมวลผล การสร้าง Worker Pool ทำให้เรา
+สามารถกระจายงานเหล่านี้ไปยัง worker หลายๆ ตัวที่ทำงาน
+พร้อมกัน (concurrently) ซึ่งจะช่วยลดเวลาในการประมวลผล
+ทั้งหมดลงได้
+
+การทำงานของ Worker Pools
+Worker Pool ประกอบด้วยสององค์ประกอบหลัก:
+
+Jobs Queue: เป็น channel ที่เก็บงานต่างๆ ที่ต้องการ
+ประมวลผล งานจะถูกส่งไปที่ Jobs Queue เพื่อรอให้ worker มาประมวลผล
+
+Workers: เป็น goroutines ที่ทำหน้าที่ดึงงานจาก Jobs Queue มาประมวลผล
+งานเหล่านี้จะถูกกระจายไปยัง worker หลายตัวเพื่อให้ประมวลผลพร้อมๆ กัน
+ซึ่งช่วยลดเวลาในการประมวลผลทั้งหมด
+
+ประโยชน์ของ Worker Pools
+เพิ่มประสิทธิภาพ: โดยการกระจายงานไปยัง worker หลายตัวที่ทำงานพร้อมกัน 
+ทำให้สามารถประมวลผลงานได้เร็วขึ้นเมื่อเทียบกับการประมวลผลทีละงาน
+ควบคุมการใช้งานทรัพยากร: การสร้าง Worker Pools 
+ช่วยให้เราสามารถควบคุมจำนวน worker หรือ goroutines
+ที่สร้างขึ้นมา ซึ่งจะช่วยจำกัดการใช้งานทรัพยากรของระบบ เช่น CPU และ Memory
+
+โครงสร้างของ Worker Pool ใน Go
+ใน Go การสร้าง Worker Pool สามารถทำได้โดยการใช้
+
+goroutines และ channels ตัวอย่างเช่น:
+
+// ฟังก์ชัน worker ที่จะทำหน้าที่ประมวลผลงานจาก Jobs Queue
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Println("Worker", id, "started job", j)
+		time.Sleep(time.Second) // จำลองการประมวลผลงาน
+		fmt.Println("Worker", id, "finished job", j)
+		results <- j * 2
+	}
+}
+
+func main() {
+	const numJobs = 5
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	// สร้าง worker 3 ตัว
+	for w := 1; w <= 3; w++ {
+		go worker(w, jobs, results)
+	}
+
+	// ส่งงานไปที่ Jobs Queue
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs) // ปิด channel เพื่อบอกว่าไม่มีงานที่จะส่งอีกแล้ว
+
+	// รับผลลัพธ์จาก Workers
+	for a := 1; a <= numJobs; a++ {
+		<-results
+	}
+}
+การทำงานของโค้ด
+Worker Creation: โค้ดสร้าง worker 3 ตัว (go worker(w, 
+jobs, results)) ซึ่งจะทำงานพร้อมกันเพื่อดึงงานจาก channel jobs
+Jobs Queue: มีการส่งงาน 5 งานไปที่ channel jobs
+Processing: worker แต่ละตัวจะดึงงานจาก channel
+jobs มาประมวลผลแล้วส่งผลลัพธ์กลับไปที่ channel
+results
+Result Collection: สุดท้าย, ผลลัพธ์จากงานจะถูกดึงจาก
+channel results
+
+สรุป
+Worker Pool เป็นวิธีที่มีประสิทธิภาพในการจัดการกับงานจำนวน
+มาก โดยการใช้ประโยชน์จากความสามารถในการทำงานพร้อมกัน
+ของ Go ซึ่งช่วยลดเวลาในการประมวลผลและควบคุมการใช้งานทรัพยากรของระบบ
