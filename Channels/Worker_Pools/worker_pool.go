@@ -106,9 +106,9 @@ results เป็น channel ที่ส่งข้อมูลประเภ
 */
 /* การใช้งานในบริบทของ Worker Pool
 ในโค้ด Worker Pool
-jobs <-chan int: หมายความว่า worker แต่ละตัวจะ รับงานจาก channel jobs เท่านั้น
-results chan<- int: หมายความว่า worker แต่ละตัวจะส่ง
-ผลลัพธ์ไปยัง channel results เท่านั้น
+jobs <-chan int: หมายความว่า worker แต่ละตัวจะรับงานจาก channel jobs เท่านั้น
+results chan<- int: หมายความว่า worker แต่ละตัวจะส่งผลลัพธ์ไปยัง
+channel results เท่านั้น
 
 การกำหนดทิศทางนี้ช่วยให้โค้ดปลอดภัยมากขึ้น และลดความ
 เสี่ยงในการใช้งาน channel ผิดประเภทเช่น การพยายามส่งข้อมูลเข้า channel
