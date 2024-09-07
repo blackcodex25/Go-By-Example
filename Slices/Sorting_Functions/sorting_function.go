@@ -21,7 +21,7 @@ func main() {
 		return cmp.Compare(len(a), len(b))
 	}
 
-	// ใช้ SortFunc เพื่อจัดเรียง fruits ตามฟังก์ชันเปรียบเทียบ lenCmp
+	// slices.SortFunc เป็นฟังก์ชันที่ใช้จัดเรียง fruits ตามฟังก์ชันเปรียบเทียบ lenCmp
 	slices.SortFunc(fruits, lenCmp)
 
 	// หลังจากจัดเรียงแล้ว จะได้ผลลัพธ์ที่เรียงลำดับตามความยาว
