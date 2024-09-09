@@ -21,6 +21,11 @@ func main() {
 	p("ToLower:   ", s.ToLower("TEST"))
 	p("ToUpper:   ", s.ToUpper("test"))
 
+	parts := []string{"https://example.com", "users", "123", "profile"}
+	url := s.Join(parts, "/")
+	fmt.Println(url)
+	// Output: https://example.com/users/123/profile
+
 }
 
 /* รายละเอียดของโค้ด:
