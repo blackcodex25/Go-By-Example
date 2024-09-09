@@ -1,0 +1,58 @@
+String Formatting คือกระบวนการจัดรูปแบบข้อมูลในรูปแบบ
+สตริงให้ตรงกับรูปแบบที่ต้องการ หรือเพื่อแสดงข้อมูลในลักษณะที่
+อ่านง่ายและเข้าใจง่ายมากขึ้น โดยทั่วไปใช้เพื่อแทรกค่าตัวแปรต่างๆ
+ลงในสตริงอย่างมีระเบียบและรูปแบบที่กำหนดไว้ล่วงหน้า
+
+ในภาษา Go ฟังก์ชันการจัดรูปแบบสตริงมีอยู่ในแพ็กเกจ fmt
+เช่น fmt.Printf, fmt.Sprintf, fmt.Fprintf เป็นต้น
+ฟังก์ชันเหล่านี้ใช้รูปแบบตัวอักษรพิเศษ (format specifiers)
+ในการกำหนดว่าค่าตัวแปรควรถูกแสดงอย่างไร
+
+รูปแบบตัวอักษรพิเศษ (Format Specifiers):
+%s: ใช้สำหรับสตริง
+%d: ใช้สำหรับตัวเลขจำนวนเต็ม (integer)
+%f: ใช้สำหรับตัวเลขทศนิยม (float)
+%v: ใช้แสดงค่าของตัวแปรในรูปแบบเริ่มต้น
+%t: ใช้สำหรับค่า boolean (true/false)
+%T: แสดงชนิดข้อมูล (type) ของตัวแปร
+%b: แสดงตัวเลขฐาน 2
+%x: แสดงในรูปแบบตัวเลขฐาน 16 (hexadecimal)
+%e, %E: ใช้จัดรูปแบบทศนิยมในรูปแบบ scientific notation
+%q: พิมพ์สตริงแบบมีเครื่องหมายอัญประกาศ
+%p: ใช้พิมพ์ pointer
+
+การจัดการความกว้าง (width) และความแม่นยำ (precision)
+สามารถทำได้โดยการกำหนดตัวเลขหลัง % เช่น %10d จะจัด
+ให้มีความกว้าง 10 และสามารถใช้ - เพื่อจัดการ left-justify ได้
+
+ตัวอย่างฟังก์ชันจัดรูปแบบสตริงใน Go:
+1.fmt.Printf
+ใช้พิมพ์สตริงออกไปยัง output พร้อมการจัดรูปแบบ
+name := "John"
+age := 30
+fmt.Printf("Name: %s, Age: %d\n", name, age)
+// Output: Name: John, Age: 30
+
+2.fmt.Sprintf
+ใช้คืนค่าการจัดรูปแบบเป็นสตริง โดยไม่พิมพ์ออกไปยัง output
+name := "John"
+age := 30
+formattedString := fmt.Sprintf("Name: %s, Age: %d", name, age)
+fmt.Println(formattedString)
+// Output: Name: John, Age: 30
+
+3.fmt.Fprintf
+ใช้เขียนข้อมูลที่จัดรูปแบบลงไปใน destination เช่นไฟล์หรือ io.Writer อื่นๆ
+file, _ := os.Create("output.txt")
+fmt.Fprintf(file, "Name: %s, Age: %d\n", "Alice", 25)
+
+ตัวอย่างการใช้งาน Format Specifiers:
+price := 12.34
+available := true
+fmt.Printf("Price: %.2f, Available: %t\n", price, available)
+// Output: Price: 12.34, Available: true
+ในตัวอย่างนี้ %f ใช้จัดรูปแบบตัวเลขทศนิยม และ %.2f หมายถึง
+การแสดงทศนิยม 2 ตำแหน่ง
+
+String Formatting จึงเป็นเครื่องมือที่สำคัญในการจัดการสตริง
+เพื่อให้การแสดงข้อมูลมีความชัดเจนและสวยงาม
