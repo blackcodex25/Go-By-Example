@@ -5,25 +5,26 @@ import (
 	s "strings"
 )
 
-var p = fmt.Println
+var p = fmt.Println // ตัวแปร p เป็นการย่อคำสั่ง fmt.Println เพื่อให้เรียกใช้ได้สะดวก
 
 func main() {
-	p("Contains:  ", s.Contains("test", "es"))
-	p("Count:   ", s.Count("test", "t"))
-	p("HasPrefix   ", s.HasPrefix("test", "te"))
-	p("HasSuffix   ", s.HasSuffix("test", "st"))
-	p("Index:   ", s.Index("test", "e"))
-	p("Join:   ", s.Join([]string{"a", "b"}, "-"))
-	p("Repeat:   ", s.Repeat("a", 5))
-	p("Replace:   ", s.Replace("foo", "o", "0", -1))
-	p("Replace:   ", s.Replace("foo", "o", "0", 1))
-	p("Split:   ", s.Split("a-b-c-d-e", "-"))
-	p("ToLower:   ", s.ToLower("TEST"))
-	p("ToUpper:   ", s.ToUpper("test"))
+	// ตัวอย่างการใช้งาน String Functions
+	p("Contains:  ", s.Contains("test", "es"))       // ตรวจสอบว่า "test" มี "es" อยู่หรือไม่
+	p("Count:   ", s.Count("test", "t"))             // ตรวจสอบจำนวน "t" ใน "test"
+	p("HasPrefix   ", s.HasPrefix("test", "te"))     // ตรวจสอบว่า "test" ขึ้นต้นด้วย "te" หรือไม่
+	p("HasSuffix   ", s.HasSuffix("test", "st"))     // ตรวจสอบว่า "test" ลงท้ายด้วย "st" หรือไม่
+	p("Index:   ", s.Index("test", "e"))             // ตรวจสอบตําแหน่งของ "e" ใน "test"
+	p("Join:   ", s.Join([]string{"a", "b"}, "-"))   // ต่อระหว่างสตริง "a" และ "b" ด้วย "-"
+	p("Repeat:   ", s.Repeat("a", 5))                // ต่อระหว่าง "a" 5 คำ
+	p("Replace:   ", s.Replace("foo", "o", "0", -1)) // แทนที่ "o" ใน "foo" ด้วย "0" ในทุกคำ
+	p("Replace:   ", s.Replace("foo", "o", "0", 1))  // แทนที่ "o" ใน "foo" ด้วย "0" ใน 1 คำ
+	p("Split:   ", s.Split("a-b-c-d-e", "-"))        // แบ่ง "a-b-c-d-e" ด้วย "-"
+	p("ToLower:   ", s.ToLower("TEST"))              // เปลี่ยน "TEST" เป็น "test"
+	p("ToUpper:   ", s.ToUpper("test"))              // เปลี่ยน "test" เป็น "TEST"
 
-	parts := []string{"https://example.com", "users", "123", "profile"}
-	url := s.Join(parts, "/")
-	fmt.Println(url)
+	parts := []string{"https://example.com", "users", "123", "profile"} // สร้าง slice ของสตริง parts ด้วยข้อมูลของสตริง
+	url := s.Join(parts, "/")                                           // ต่อระหว่างสตริง parts ด้วย "/"
+	fmt.Println(url)                                                    // แสดงผลลัพธ์
 	// Output: https://example.com/users/123/profile
 
 }
