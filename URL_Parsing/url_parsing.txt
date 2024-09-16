@@ -1,0 +1,27 @@
+URL Parsing คือกระบวนการแยกและวิเคราะห์ข้อมูลจาก URL 
+(Uniform Resource Locator) เพื่อให้เข้าใจถึงส่วนประกอบต่างๆ
+ของ URL ซึ่งแต่ละส่วนจะบอกตำแหน่งของทรัพยากรหรือข้อมูลบน
+อินเทอร์เน็ต การทำ URL Parsing ช่วยให้เราสามารถดึงข้อมูลสำคัญ
+จาก URL เช่น Domain, Name Protocal, Path, Value Parameters 
+และข้อมูลอื่นๆ ที่เกี่ยวข้อง
+
+ในภาษา Go เราสามารถใช้แพ็คเกจ net/url ในการทำงานกับ URL
+Parsing ได้ ซึ่งมีฟังก์ชันที่ช่วยให้เราสามารถแยกส่วนต่างๆ ของ
+URL และจัดการกับ URL ได้อย่างมีประสิทธิภาพ
+
+ส่วนประกอบของ URL
+โดยทั่วไป URL จะมีโครงสร้างดังนี้:
+scheme://[userinfo@]host[:port][/path][?query][#fragment]
+ตัวอย่างเช่น:
+https://user:password@www.example.com:8080/path/to/resource?key=value#section
+
+scheme: โปรโตคอลที่ใช้ เช่น http, https, ftp
+userinfo: ข้อมูลผู้ใช้ (username และ password)
+host: โดเมนเนมหรือ IP address
+port: พอร์ทที่ใช้ในการเชื่อมต่อ (ไม่จำเป็นต้องระบุหากเป็นพอร์ตดีฟอลต์)
+path: ที่อยู่ของไฟล์
+query: พารามิเตอร์เพิ่มเติมที่อยู่ในรูปแบบ key-value
+fragment: ส่วนของเอกสารที่ต้องการอ้างอิง (มักใช้ในการระบุส่วนหนึ่งของเว็บเพจ)
+
+
+
