@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/url"
-	"os"
 )
 
 /*
@@ -18,8 +17,7 @@ func main() {
 	// ใช้ url.Parse เพื่อแปลง URL ให้เป็นโครงสร้างข้อมูล
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil { // ตรวจสอบว่า error ที่ได้รับเป็น nil หรือไม่
-		fmt.Printf("error: %v\n", err) // แสดงข้อผิดพลาด ถ้าไม่สามารถแปลง URL ได้
-		os.Exit(1)                     // ออกจากโปรแกรม
+		panic(err) // หากเกิดข้อผิดพลาดในการแปลง จะใช้ panic() เพื่อหยุดโปรแกรมทันที
 	}
 
 	// แสดงส่วนต่างๆของ URL
