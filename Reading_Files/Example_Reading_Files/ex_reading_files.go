@@ -17,7 +17,7 @@ func check(e error, msg string) error {
 	if e != nil {
 		return fmt.Errorf("%s: %w", msg, e)
 	}
-	return nil
+	return e
 }
 
 func p(format string, args ...interface{}) {
@@ -39,7 +39,7 @@ func main() {
 	b1 := make([]byte, 5)
 	n1, err := io.ReadAtLeast(f, b1, 5)
 	check(err, "Error can't read bytes files")
-	p("%d bytes: %s\n", n1, string(b1[:n1]))
+	p("%d bytes: %s", n1, string(b1[:n1]))
 
 	// ใช้ Seek เพื่อย้ายตำแหน่งไปที่ไบต์ที่ 6 และ อ่าน 2 ไบต์ถัดไป
 	o2, err := f.Seek(6, io.SeekStart)
@@ -47,7 +47,7 @@ func main() {
 	b2 := make([]byte, 2)
 	n2, err := io.ReadAtLeast(f, b2, 2)
 	check(err, "Error reading file contents")
-	p("%d bytes @ %d: %v\n", n2, o2, string(b2[:n2]))
+	p("%d bytes @ %d: %v", n2, o2, string(b2[:n2]))
 
 	// กระโดดไปที่ตำแหน่งใหม่ในไฟล์
 	_, err = f.Seek(4, io.SeekCurrent)
@@ -61,7 +61,7 @@ func main() {
 	b3 := make([]byte, 2)
 	n3, err := io.ReadAtLeast(f, b3, 2)
 	check(err, "Error reading file contents")
-	p("%d bytes @ %d: %v\n", n3, o3, string(b3))
+	p("%d bytes @ %d: %v", n3, o3, string(b3))
 
 	// ย้าย cursor กลับไปที่จุดเริ่มต้นของไฟล์
 	_, err = f.Seek(0, io.SeekStart)
@@ -71,7 +71,7 @@ func main() {
 	r4 := bufio.NewReader(f)
 	b4, err := r4.Peek(4)
 	check(err, "Error reading file stats")
-	p("4 bytes: %s\n", string(b4))
+	p("4 bytes: %s", string(b4))
 }
 
 /* อธิบายหลักการทำงานของโค้ดแต่ละบรรทัด:
