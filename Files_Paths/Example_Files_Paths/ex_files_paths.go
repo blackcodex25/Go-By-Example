@@ -7,7 +7,20 @@ import (
 	"strings"
 )
 
+// IsAbsPath ตรวจสอบว่าเส้นทาง path เป็น absolute path หรือไม่
+// absolute path คือเส้นทางที่ระบุถึงตำแหน่งของไฟล์หรือไดเรกทอรีอย่างครบถ้วน
+// เช่น /home/user/file.txt หรือ C:\Users\user\file.txt
+func IsAbsPath(path string) bool {
+	// filepath.IsAbs ตรวจสอบว่าเส้นทาง path เป็น absolute path หรือไม่
+	return filepath.IsAbs(path)
+}
 func main() {
+	// ตัวอย่างการตรวจสอบว่าเส้นทาง path เป็น absolute path หรือไม่
+	paths := []string{
+		"/dir/file",   // Linux
+		"C:/dir/file", // windows
+	}
+
 	// สร้างเส้นทางไฟล์โดยใช้ Join
 	p := filepath.Join("dir1", "dir2", "filename")
 	// แปลง \ เป็น / ในการสร้างเส้นทาง
@@ -26,11 +39,12 @@ func main() {
 	// คืนค่าชื่อไฟล์
 	fmt.Println("Base(p):", filepath.Base(p))
 
-	// ตรวจสอบว่าเส้นทางเป็น Absolute Path หรือไม่
-	// false เพราะไม่ใช่ Absolute Path
-	fmt.Println(filepath.IsAbs("dir/file"))
-	// true เพราะมี "/" ที่จุดเริ่มต้น
-	fmt.Println(filepath.IsAbs("C:/dir/file"))
+	// ตรวจสอบว่าเส้นทางใน slice paths เป็น absolute path หรือไม่
+	// ถ้าเป็น absolute path จะแสดงผลว่า true
+	// ถ้าไม่เป็น absolute path จะแสดงผลว่า false
+	for _, path := range paths {
+		fmt.Printf("Is '%s' an absolute path? %v\n", path, IsAbsPath(path))
+	}
 
 	// จัดการกับส่วนขยายของไฟล์
 	filename := "config.json"
@@ -41,11 +55,9 @@ func main() {
 	// หา relative path ระหว่างสองเส้นทาง
 	// คืนค่าเส้นทางความสัมพัทธ์ (Relative Path)
 	rel, err := filepath.Rel("a/b", "a/b/t/file")
-	// ตรวจสอบว่ามีข้อผิดพลาดในการหา relative path หรือไม่
-	// ถ้ามีข้อผิดพลาด จะแสดงข้อความข้อผิดพลาดทาง stderr และ return
 	if err != nil {
-		log.Printf("Error: %v", err) // แสดงข้อความข้อผิดพลาด
-		return                       // หยุดการทำงาน
+		log.Printf("Error: %v", err)
+		return
 	}
 	fmt.Println(filepath.ToSlash(rel))
 
@@ -58,12 +70,3 @@ func main() {
 	fmt.Println(filepath.ToSlash(rel))
 
 }
-
-/* สรุปหลักการทำงาน:
-โค้ดนี้แสดงให้เห็นถึงการใช้ฟังก์ชันจากแพ็คเกจ filepath ในการสร้าง, ตรวจสอบ,
-และจัดการเส้นทางไฟล์อย่างเป็นระบบ
-ใช้ Join เพื่อสร้างเส้นทางไฟล์ที่พกพาระหว่างระบบปฏิบัติการ
-ใช้ Dir และ Base ในการแยกเส้นทางและชื่อไฟล์
-ใช้ Rel เพื่อค้นหาเส้นทางสัมพัทธ์ระหว่างสองเส้นทาง
-Ext ใช้เพื่อแยกส่วนขยายของไฟล์ และ TrimSuffix ใช้เพื่อตัดนามสกุลออก
-*/
