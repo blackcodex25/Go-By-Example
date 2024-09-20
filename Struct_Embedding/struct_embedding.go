@@ -38,7 +38,8 @@ Structs Embedding And Interfaces
 และมีฟังก์ชัน describe ที่อธิบายค่า num ในรูปแบบของสตริง
 */
 type base struct {
-	num, enum int
+	num  int32
+	enum int32
 }
 
 /*
