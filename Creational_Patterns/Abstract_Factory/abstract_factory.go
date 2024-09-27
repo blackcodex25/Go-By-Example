@@ -66,23 +66,31 @@ func (c *Circle) Draw() {
 	fmt.Println("Drawing a Circle")
 }
 
+// Shape Factory
+var shape = map[string]func() Shape{
+	"rectangle": func() Shape { return &Rectangle{} },
+	"circle":    func() Shape { return &Circle{} },
+}
+
+// Color Factory
+var color = map[string]func() Color{
+	"red":  func() Color { return &Red{} },
+	"blue": func() Color { return &Blue{} },
+}
+
 // Abstract Factory Interface
 // สร้าง Rectangle หรือ Circle ตามประเภทที่กำหนด
 func (sf *ShapeFactory) GetShape(shapeType string) Shape {
-	if shapeType == "rectangle" {
-		return &Rectangle{}
-	} else if shapeType == "circle" {
-		return &Circle{}
+	if shapeFunc, ok := shape[shapeType]; ok {
+		return shapeFunc()
 	}
 	return nil
 }
 
 // สร้าง Red หรือ Blue ตามประเภทที่กำหนด
 func (cf *ColorFactory) GetColor(colorType string) Color {
-	if colorType == "red" {
-		return &Red{}
-	} else if colorType == "blue" {
-		return &Blue{}
+	if colorFunc, ok := color[colorType]; ok {
+		return colorFunc()
 	}
 	return nil
 }
@@ -93,9 +101,7 @@ var (
 	shapeFactory = &ShapeFactory{}
 	// สร้างอ็อบเจ็กต์ red และ blue จาก ColorFactory
 	colorFactory = &ColorFactory{}
-)
 
-var (
 	// เรียกใช้ GetColor จาก colorFactory โดยส่งพารามิเตอร์เป็น "red"
 	// เรียกใช้ GetColor จาก colorFactory โดยส่งพารามิเตอร์เป็น "blue"
 	red  = colorFactory.GetColor("red")
